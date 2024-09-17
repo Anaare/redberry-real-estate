@@ -1,0 +1,30 @@
+.container {
+	display: flex;
+}
+
+.firstIcon {
+	width: 32px;
+	height: 32px;
+	position: relative;
+	top: 40px;
+	left: 100px;
+	padding: 5.33px;
+	gap: 0px;
+	opacity: 0px;
+}
+
+.propertyContent {
+	width: 1591px;
+	height: 714px;
+	top: 225px;
+	left: 162px;
+	margin: 75px;
+	display: flex;
+	gap: 40px;
+}
+
+.propertyContent img {
+	width: 500px;
+	height: 400px;
+	object-fit: cover;
+}

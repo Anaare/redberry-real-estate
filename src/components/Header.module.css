@@ -1,16 +1,13 @@
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 1920px;
-  height: 100px;
-  padding: 38px 162px 38px 162px;
-  gap: 10px;
-  border: 1px solid #dbdbdb;
-  opacity: 0px;
+	width: 1920px;
+	height: 100px;
+	padding: 38px 162px 38px 162px;
+	gap: 10px;
+	border: 1px solid #dbdbdb;
+	opacity: 0px;
 }
 
 .logo {
-  width: 150px;
-  height: 24px;
+	width: 150px;
+	height: 24px;
 }

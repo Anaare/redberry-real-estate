@@ -1,0 +1,46 @@
+.container {
+	width: 553px;
+	height: 29px;
+	top: 240px;
+	left: 162px;
+	opacity: 1;
+	position: absolute;
+	font-family: 'FiraGO', sans-serif;
+	font-weight: 500;
+	display: flex;
+	flex-wrap: nowrap; /* Ensure items do not wrap to the next line */
+	align-items: center;
+}
+
+.info {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: 29px;
+	padding: 6px 10px;
+	gap: 4px;
+	border-radius: 43px;
+	border: 1px solid #dbdbdb;
+	margin-left: 4px;
+	white-space: nowrap;
+}
+
+.info p {
+	margin: 0;
+	white-space: nowrap;
+}
+
+.btn {
+	font-family: 'FiraGO', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 16.8px;
+	border: none;
+	background: none;
+	padding: 0;
+	margin: 4px;
+	color: #021526;
+	display: flex;
+	align-items: center;
+}

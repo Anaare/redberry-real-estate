@@ -34,7 +34,7 @@ function AddAgent() {
 				<div>
 					<h4>ატვირთეთ ფოტო *</h4>
 					<div className={styles.photoUpload}>
-						<img src="/images/plus-circle.png" alt="redberry logo" />
+						<img src="/images/icons/plus-circle.png" alt="redberry logo" />
 					</div>
 				</div>
 				<div className={styles.buttons}>
