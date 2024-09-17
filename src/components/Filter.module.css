@@ -1,0 +1,81 @@
+.filter {
+	width: 100%;
+	max-width: 1596px;
+	height: 47px;
+	position: absolute;
+	top: 177px;
+	left: 162px;
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+	opacity: 1;
+	z-index: 10;
+}
+
+.filterItems {
+	width: 785px;
+	height: 47px;
+	padding: 6px;
+	border-radius: 10px;
+	border: 1px solid #dbdbdb;
+	opacity: 0px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.filterItemBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: 35px;
+	padding: 8px 14px;
+	margin: 0;
+	font-size: 16px;
+	line-height: 19.2px;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #fff;
+	border: none;
+	gap: 8px;
+}
+
+.filterItemBtn img {
+	width: 16px;
+	height: 16px;
+}
+
+.addButtons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 449px;
+	height: 47px;
+	gap: 16px;
+}
+
+.addListing,
+.addAgent {
+	width: 230px;
+	height: 47px;
+	border-radius: 10px;
+	padding: 10px 16px;
+	gap: 2px;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	line-height: 19.2px;
+	text-align: center;
+}
+
+.addListing {
+	background-color: #f93b1d;
+}
+
+.addAgent {
+	color: #f93b1d;
+	background-color: #fff;
+	border: 1px solid #f93b1d;
+}

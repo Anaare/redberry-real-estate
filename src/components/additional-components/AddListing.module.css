@@ -1,0 +1,226 @@
+@font-face {
+	font-family: 'Helvetica';
+	src: url('/fonts/HelveticaNeueBlack.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.form {
+	position: relative;
+}
+
+.form h1 {
+	position: absolute;
+	top: 162px;
+	left: 787px;
+	width: 347px;
+	height: 38px;
+	font-family: 'FiraGO', sans-serif;
+	font-size: 32px;
+	font-weight: 500;
+	line-height: 38.4px;
+	text-align: center;
+	color: #021526;
+	opacity: 1;
+}
+
+.formItems {
+	position: absolute;
+	top: 261px;
+	left: 566px;
+	gap: 80px;
+	width: 790px;
+	height: 1211px;
+}
+
+.form h3 {
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 19.54px;
+	text-align: left;
+	color: #1a1a1f;
+	font-family: 'Helvetica', sans-serif;
+	margin-bottom: 12px;
+}
+
+.form h4 {
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16.8px;
+	text-align: left;
+	color: #1a1a1f;
+	font-family: 'FiraGO', sans-serif;
+	margin-bottom: 12px;
+}
+
+.dealType {
+	width: 266px;
+	margin-bottom: 32px;
+	display: flex;
+	align-items: left;
+	justify-content: space-between;
+}
+
+.dealType label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.dealType input[type='radio'] {
+	margin: 0;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+}
+
+.sale,
+.rent {
+	font-family: 'FiraGO', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.8px;
+	text-align: left;
+}
+
+/* LOCATION */
+
+.location {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.location .input-group {
+	display: flex;
+	gap: 24px;
+}
+
+.location .input-group > div {
+	flex: 1;
+}
+
+.location label {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.location input[type='text'],
+.location input[type='number'],
+.location select,
+.details select {
+	width: 384px;
+	height: 42px;
+	padding: 8px;
+	border-radius: 6px;
+	border: 1px solid #808a93;
+}
+
+.location select {
+	height: 35px;
+}
+
+/* DETAILS */
+.details {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin-top: 25px;
+}
+
+.details h3 {
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 19.54px;
+	color: #1a1a1f;
+	margin-bottom: 12px;
+}
+
+.details .input-group {
+	display: flex;
+	gap: 24px; /* Space between inputs */
+}
+
+.details .input-group > div {
+	flex: 1; /* Make inputs take equal space */
+}
+
+.details label {
+	display: flex;
+	flex-direction: column;
+	gap: 4px; /* Space between label text and input */
+}
+
+.details input[type='number'] {
+	width: 384px; /* Full width of the parent */
+	height: 42px;
+	padding: 8px;
+	border-radius: 6px;
+	border: 1px solid #808a93;
+}
+
+.details textarea {
+	width: 788px;
+	height: 135px;
+	padding: 10px;
+	gap: 10px;
+	border-radius: 6px;
+	opacity: 0px;
+	border: 1px solid #808a93;
+}
+
+.photoUpload {
+	width: 788px;
+	height: 120px;
+	border-radius: 8px 0 0 0;
+	border: 1px dotted #2d3648;
+	opacity: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.photoUpload img {
+	max-width: 100%;
+	max-height: 100%;
+	display: block;
+}
+
+.buttons {
+	display: flex;
+	justify-content: flex-end; /* Align buttons to the right */
+	gap: 10px;
+	width: 100%;
+	min-width: 103px;
+	height: 47px;
+	padding: 10px 16px;
+	border-radius: 10px;
+	opacity: 1;
+}
+
+.addBtn,
+.cancelBtn {
+	width: 230px;
+	height: 47px;
+	border-radius: 10px;
+	padding: 10px 16px;
+	gap: 2px;
+	border: none;
+
+	font-size: 16px;
+	line-height: 19.2px;
+	text-align: center;
+}
+
+.addBtn {
+	background-color: #f93b1d;
+	color: #fff;
+}
+
+.cancelBtn {
+	background-color: #fff;
+	color: #f93b1d;
+	border: 1px solid #f93b1d;
+}

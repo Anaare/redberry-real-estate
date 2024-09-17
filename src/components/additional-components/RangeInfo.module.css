@@ -1,0 +1,107 @@
+.modal {
+	width: 382px;
+	height: 372px;
+	top: 234px;
+	left: 306px;
+	padding: 24px;
+	gap: 32px;
+	border-radius: 10px;
+	border: 1px solid #dbdbdb;
+}
+
+.inputs {
+	width: 325px;
+	height: 42px;
+	gap: 15px;
+	display: flex;
+}
+
+.modal h4 {
+	font-family: 'FiraGO', sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 19.2px;
+	text-align: left;
+	color: #021526;
+	margin-bottom: 15px;
+}
+
+.modal input {
+	width: 155px;
+	height: 42px;
+	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid #808a93;
+	color: #808a93;
+}
+
+.ranges {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+	width: 325px;
+	height: 150px;
+}
+
+.min,
+.max {
+	display: flex;
+	flex-direction: column;
+}
+
+.ranges h5 {
+	margin-bottom: 5px;
+}
+
+.ranges ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ranges {
+	position: relative;
+	width: 100%;
+}
+
+.max {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 155px;
+}
+
+.bedroomsAmount {
+	width: 41px; /* Set the desired width */
+	height: 42px; /* Set the desired height */
+}
+
+.bedroomsAmount input {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid #808a93;
+	color: #808a93;
+	text-align: center;
+}
+.button {
+	display: flex;
+	justify-content: flex-end;
+	width: 334px;
+	height: 33px;
+}
+
+.chooseBtn {
+	width: 77px;
+	height: 33px;
+	border-radius: 10px;
+	padding: 10px 16px;
+	border: none;
+	font-size: 14px;
+	line-height: 16.8px;
+	text-align: center;
+	background-color: #f93b1d;
+	color: #fff;
+}
