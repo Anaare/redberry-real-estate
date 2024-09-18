@@ -1,12 +1,34 @@
-import styles from './RangeInfo.module.css';
+import { useState } from 'react';
 import Button from './Button';
-function PriceRange() {
+import styles from './RangeInfo.module.css';
+function PriceRange({ setMinPrice, setMaxPrice, onClose }) {
+	const [localMinPrice, setLocalMinPrice] = useState('');
+	const [localMaxPrice, setLocalMaxPrice] = useState('');
+
+	const handleChoose = () => {
+		if (localMinPrice && localMaxPrice) {
+			setMinPrice(localMinPrice);
+			setMaxPrice(localMaxPrice);
+		}
+		onClose();
+	};
+
 	return (
-		<div className={styles.modal}>
+		<div className={styles.priceRange}>
 			<h4>ფასის მიხედვით</h4>
 			<div className={styles.inputs}>
-				<input type="text" value="დან" />
-				<input type="text" value="მდე" />
+				<input
+					type="text"
+					placeholder="დან"
+					value={localMinPrice}
+					onChange={e => setLocalMinPrice(e.target.value)}
+				/>
+				<input
+					type="text"
+					placeholder="მდე"
+					value={localMaxPrice}
+					onChange={e => setLocalMaxPrice(e.target.value)}
+				/>
 			</div>
 			<div className={styles.ranges}>
 				<div className={styles.min}>
@@ -31,7 +53,9 @@ function PriceRange() {
 				</div>
 			</div>
 			<div className={styles.button}>
-				<Button className={styles.chooseBtn}>არჩევა</Button>
+				<Button className={styles.chooseBtn} onClick={handleChoose}>
+					არჩევა
+				</Button>
 			</div>
 		</div>
 	);

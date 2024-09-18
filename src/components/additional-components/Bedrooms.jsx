@@ -1,15 +1,25 @@
+import { useState } from 'react';
 import styles from './RangeInfo.module.css';
 import Button from './Button';
-function Bedrooms() {
+function Bedrooms({ onClose }) {
+	const [selectedBedrooms, setSelectedBedrooms] = useState(2);
+
+	const handleButtonClick = () => {
+		setSelectedBedrooms(2);
+		onClose();
+	};
+
 	return (
-		<div className={styles.modal}>
+		<div className={styles.bedroomsContainer}>
 			<h4>საძინებლის რაოდენობა</h4>
 			<div className={styles.bedroomsAmount} id="bedroomsAmount">
-				<input type="text" value="2" disabled />
+				<input type="text" value={selectedBedrooms || ''} disabled />
 			</div>
 
-			<div className={styles.button}>
-				<Button className={styles.chooseBtn}>არჩევა</Button>
+			<div className={styles.bedroomBtn}>
+				<Button className={styles.bedroomChooseBtn} onClick={handleButtonClick}>
+					არჩევა
+				</Button>
 			</div>
 		</div>
 	);

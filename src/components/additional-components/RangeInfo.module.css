@@ -9,11 +9,40 @@
 	border: 1px solid #dbdbdb;
 }
 
+.area {
+	width: 382px;
+	height: 372px;
+	position: absolute;
+	top: 50px;
+	left: 400px;
+	padding: 24px;
+	gap: 32px;
+	border-radius: 10px;
+	border: 1px solid #dbdbdb;
+	background-color: #fff;
+}
+
+.priceRange {
+	width: 382px;
+	height: 372px;
+	position: absolute;
+	top: 50px;
+	left: 158px;
+	padding: 24px;
+	gap: 32px;
+	border-radius: 10px;
+	border: 1px solid #dbdbdb;
+	background-color: #fff;
+}
+
 .inputs {
 	width: 325px;
 	height: 42px;
 	gap: 15px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 	display: flex;
+	justify-content: space-between;
 }
 
 .modal h4 {
@@ -26,7 +55,7 @@
 	margin-bottom: 15px;
 }
 
-.modal input {
+.inputs input {
 	width: 155px;
 	height: 42px;
 	padding: 10px;
@@ -55,8 +84,8 @@
 
 .ranges ul {
 	list-style: none;
-	padding: 0;
-	margin: 0;
+
+	margin-bottom: 10px;
 }
 
 .ranges {
@@ -71,9 +100,23 @@
 	width: 155px;
 }
 
+.bedroomsContainer {
+	width: 282px;
+	height: 198px;
+	position: absolute;
+	top: 50px;
+	left: 530px;
+	padding: 24px;
+	gap: 32px;
+	border-radius: 10px;
+	border: 1px solid #dbdbdb;
+	background-color: #fff;
+	box-shadow: 5px 5px 12px 0px #02152614;
+}
+
 .bedroomsAmount {
-	width: 41px; /* Set the desired width */
-	height: 42px; /* Set the desired height */
+	width: 41px;
+	height: 42px;
 }
 
 .bedroomsAmount input {
@@ -85,6 +128,29 @@
 	border: 1px solid #808a93;
 	color: #808a93;
 	text-align: center;
+	margin-top: 30px;
+}
+.bedroomBtn {
+	display: flex;
+	justify-content: flex-end;
+	width: 334px;
+	height: 33px;
+}
+
+.bedroomChooseBtn {
+	position: relative;
+	right: 100px;
+	top: 65px;
+	width: 77px;
+	height: 33px;
+	border-radius: 10px;
+	padding: 10px 16px;
+	border: none;
+	font-size: 14px;
+	line-height: 16.8px;
+	text-align: center;
+	background-color: #f93b1d;
+	color: #fff;
 }
 .button {
 	display: flex;

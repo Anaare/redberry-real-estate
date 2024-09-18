@@ -10,7 +10,7 @@ export default function Region({ data, setSelectedRegion, onClose }) {
 	};
 
 	const handleButtonClick = () => {
-		setSelectedRegion(selectedRegion);
+		if (selectedRegion) setSelectedRegion(selectedRegion);
 		onClose();
 	};
 

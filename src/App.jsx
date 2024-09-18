@@ -15,6 +15,12 @@ function App() {
 	const [minArea, setMinArea] = useState(55);
 	const [maxArea, setMaxArea] = useState(90);
 	const [bedrooms, setBedrooms] = useState(1);
+	const [filters, setFilters] = useState({
+		region: true,
+		price: true,
+		area: true,
+		bedrooms: true,
+	});
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -49,13 +55,36 @@ function App() {
 		fetchData();
 	}, []);
 
+	const handleRemoveFilter = filterType => {
+		setFilters(prevFilters => ({
+			...prevFilters,
+			[filterType]: false,
+		}));
+	};
+
+	const handleClearAllFilters = () => {
+		setFilters({
+			region: false,
+			price: false,
+			area: false,
+			bedrooms: false,
+		});
+	};
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
 	return (
 		<div className="main-container">
 			<Header />
-			<Filter data={data} setSelectedRegion={setSelectedRegion} />
+			<Filter
+				data={data}
+				setSelectedRegion={setSelectedRegion}
+				setMinPrice={setMinPrice}
+				setMaxPrice={setMaxPrice}
+				setMinArea={setMinArea}
+				setMaxArea={setMaxArea}
+			/>
 			<FilteredInfo
 				region={selectedRegion}
 				minPrice={minPrice}
@@ -63,6 +92,9 @@ function App() {
 				minArea={minArea}
 				maxArea={maxArea}
 				bedrooms={bedrooms}
+				filters={filters}
+				onRemoveFilter={handleRemoveFilter}
+				onClearAllFilters={handleClearAllFilters}
 			/>
 			<div className={styles.propertyCards}>
 				<PropertyCard />
