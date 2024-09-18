@@ -1,47 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Button from './Button';
+import styles from './Region.module.css';
 
-function Region() {
-	const [data, setData] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+export default function Region({ data, setSelectedRegion, onClose }) {
+	const [selectedRegion, setSelectedRegionLocal] = useState(null);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await fetch(
-					'https://api.real-estate-manager.redberryinternship.ge/api/cities',
-					{
-						method: 'GET',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				);
+	const handleCheckboxChange = regionName => {
+		setSelectedRegionLocal(regionName);
+	};
 
-				if (!response.ok) {
-					const errorText = await response.text();
-					throw new Error(
-						`Network response was not ok. Status: ${response.status}. Error: ${errorText}`
+	const handleButtonClick = () => {
+		setSelectedRegion(selectedRegion);
+		onClose();
+	};
+
+	return (
+		<div className={styles.container}>
+			<h4>რეგიონის მიხედვით</h4>
+			<ul className={styles.regions}>
+				{data.map(region => {
+					return (
+						<li key={region.id}>
+							<input
+								type="checkbox"
+								id={`region-${region.id}`}
+								checked={selectedRegion === region.name}
+								onChange={() => handleCheckboxChange(region.name)}
+							/>
+							<label htmlFor={`region-${region.id}`}>{region.name}</label>
+						</li>
 					);
-				}
-
-				const result = await response.json();
-				setData(result);
-			} catch (error) {
-				console.error('Fetch error:', error);
-				setError(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchData();
-	}, []);
-
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error.message}</p>;
-
-	return <div></div>;
+				})}
+			</ul>
+			<div className={styles.btn}>
+				<Button className={styles.acceptBtn} onClick={handleButtonClick}>
+					არჩევა
+				</Button>
+			</div>
+		</div>
+	);
 }
-
-export default Region;

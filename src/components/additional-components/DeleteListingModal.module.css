@@ -1,0 +1,57 @@
+.deleteModal {
+	width: 623px;
+	height: 222px;
+	top: 429px;
+	left: 649px;
+	border-radius: 20px;
+	opacity: 0px;
+	background-color: #ffffff;
+	box-shadow: 5px 5px 12px 0px #02152614;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+.deleteModal h4 {
+	font-family: 'FiraGO', sans-serif;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 24px;
+	text-align: left;
+	color: #2d3648;
+}
+
+.buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 103px;
+	height: 47px;
+	gap: 16px;
+}
+
+.cancelBtn,
+.acceptBtn {
+	width: 230px;
+	height: 47px;
+	border-radius: 10px;
+	padding: 10px 16px;
+	gap: 2px;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	line-height: 19.2px;
+	text-align: center;
+}
+
+.acceptBtn {
+	background-color: #f93b1d;
+}
+
+.cancelBtn {
+	color: #f93b1d;
+	background-color: #fff;
+	border: 1px solid #f93b1d;
+}

@@ -1,11 +1,13 @@
 import Header from '../Header';
+import Button from './Button';
 import styles from './ListingPage.module.css';
+import PropertyCard from './PropertyCard';
 function ListingPage() {
 	return (
 		<div>
 			<Header />
 			<div className={styles.container}>
-				<img src="./images/icons/right.svg" className={styles.firstIcon} />
+				<img src="./images/icons/left.svg" className={styles.firstIcon} />
 				<div className={styles.propertyContent}>
 					<img src="./images/property-images/property-1.png" alt="property-1" />
 					<div className={styles.description}>
@@ -36,14 +38,43 @@ function ListingPage() {
 								ტექნიკით.
 							</p>
 						</div>
-						{/*დასამატებელია აგენტის ინფო და წაშლის ღილაკი + სტილებია დასაკორექტირებელი.
-                        
-                            ასევე! არ დამავიწყდეს მოდალი (წაშლის ღილაკზე დაჭერისას გამოდის)
-                        */}
+						<div className={styles.agentInfo}>
+							<img src="./images/agents/agent-1.png" alt="agent-name" />
+							<div>
+								<p>სოფიო გელოვანი</p> {/* data from API*/}
+								<span>აგენტი</span>
+							</div>
+							<div className={styles.contactInfo}>
+								<div className={styles.mail}>
+									<img src="./images/icons/envelope.svg" alt="envelope icon" />
+									<p>sophio.gelovani@redberry.ge</p> {/* data from API */}
+								</div>
+								<div className={styles.phone}>
+									<img src="./images/icons/phone.svg" alt="phone icon" />
+									<p>577 77 77 77</p> {/* data from API */}
+								</div>
+							</div>
+						</div>
+						<div>
+							<Button className={styles.btn}>ლისტინგის წაშლა</Button>
+						</div>
 					</div>
 				</div>
 			</div>
 			<p className={styles.releasedInfo}>გამოქვეყნების თარიღი 08/08/2024</p>
+			<div className={styles.relatedProperties}>
+				<h1>ბინები მსგავს ლოკაციაზე</h1>
+				<div className={styles.propertiesContainer}>
+					<img src="./images/icons/left.svg" className={styles.secondIcon} />
+					<div className={styles.propertiesList}>
+						<PropertyCard /> {/* based on related info */}
+						<PropertyCard /> {/* based on related info */}
+						<PropertyCard /> {/* based on related info */}
+						<PropertyCard /> {/* based on related info */}
+					</div>
+					<img src="./images/icons/right.svg" className={styles.thirdIcon} />
+				</div>
+			</div>
 		</div>
 	);
 }

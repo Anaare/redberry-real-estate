@@ -1,11 +1,11 @@
-import React from "react"
+import React from 'react';
 
-function Button({className, children}) {
-    return (
-        <button className={className}>
-            {children}
-        </button>
-    )
+function Button({ className, children, onClick }) {
+	return (
+		<button className={className} onClick={onClick}>
+			{children}
+		</button>
+	);
 }
 
-export default Button
+export default Button;

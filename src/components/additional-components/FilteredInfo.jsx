@@ -1,22 +1,30 @@
 import Button from './Button';
 import styles from './FilteredInfo.module.css';
-function FilteredInfo() {
+
+export default function FilteredInfo({
+	region,
+	minPrice,
+	maxPrice,
+	minArea,
+	maxArea,
+	bedrooms,
+}) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.info}>
-				<p>თბილისი</p>
+				<p>{region}</p>
 				<img src="./images/icons/remove.svg" alt="x" />
 			</div>
 			<div className={styles.info}>
-				<p>55 მ² - 90 მ²</p>
+				<p>{`${minArea} მ² - ${maxArea} მ²`}</p>
 				<img src="./images/icons/remove.svg" alt="x" />
 			</div>
 			<div className={styles.info}>
-				<p>20000₾ - 100000₾</p>
+				<p>{`${minPrice}₾ - ${maxPrice}₾`}</p>
 				<img src="./images/icons/remove.svg" alt="x" />
 			</div>
 			<div className={styles.info}>
-				<p>1</p>
+				<p>{bedrooms}</p>
 				<img src="./images/icons/remove.svg" alt="x" />
 			</div>
 			<div>
@@ -25,5 +33,3 @@ function FilteredInfo() {
 		</div>
 	);
 }
-
-export default FilteredInfo;
