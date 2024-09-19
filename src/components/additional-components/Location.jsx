@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import styles from './AddListing.module.css';
 
-export default function Location() {
+export default function Location({ regions, cities }) {
+	const [selectedRegion, setSelectedRegion] = useState(null);
+
+	const filteredCities = cities.filter(
+		city => city.region_id === selectedRegion
+	);
+
 	return (
 		<div className={styles.location}>
 			<h3>მდებარეობა</h3>
@@ -9,7 +16,7 @@ export default function Location() {
 					<label>
 						მისამართი *
 						<input type="text" />
-						{/*validations WITH react! at least 2 symbols*/}
+						{/* Validations with React: at least 2 symbols */}
 					</label>
 				</div>
 
@@ -17,28 +24,48 @@ export default function Location() {
 					<label>
 						საფოსტო ინდექსი *
 						<input type="number" />
-						{/*validations WITH react! only numbers */}
+						{/* Validations with React: only numbers */}
 					</label>
 				</div>
 			</div>
+
 			<div className={styles['input-group']}>
+				{/* Region selection */}
 				<div>
 					<label>
 						რეგიონი
-						<select>
-							<option>კახეთი</option> {/*  I need data from backend */}
+						<select
+							value={selectedRegion || ''}
+							onChange={e => setSelectedRegion(Number(e.target.value))}
+						>
+							<option value="">აირჩიეთ რეგიონი</option>
+							{regions.map(region => (
+								<option key={region.id} value={region.id}>
+									{region.name}
+								</option>
+							))}
 						</select>
 					</label>
 				</div>
-				<div>
-					<label>
-						ქალაქი
-						<select>
-							<option>თელავი</option>
-							{/* MUST BE Available only after choosing the city */}
-						</select>
-					</label>
-				</div>
+
+				{selectedRegion && (
+					<div>
+						<label>
+							ქალაქი
+							<select>
+								{filteredCities.length > 0 ? (
+									filteredCities.map(city => (
+										<option key={city.id} value={city.id}>
+											{city.name}
+										</option>
+									))
+								) : (
+									<option>ქალაქები არ მოიძებნა</option>
+								)}
+							</select>
+						</label>
+					</div>
+				)}
 			</div>
 		</div>
 	);

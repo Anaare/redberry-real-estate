@@ -1,7 +1,8 @@
 import styles from './AddListing.module.css';
 import Button from './Button';
 
-function Details() {
+function Details({ agents }) {
+	console.log(agents);
 	return (
 		<div className={styles.details}>
 			<h3>ბინის დეტალები</h3>
@@ -40,7 +41,11 @@ function Details() {
 				<div>
 					<h4>აირჩიე</h4>
 					<select>
-						<option>გიორგი ბრეგვაძე</option> {/* From BACKEND!*/}
+						{agents.map(agent => (
+							<option>
+								{agent.name} {agent.surname}
+							</option>
+						))}
 					</select>
 				</div>
 			</div>

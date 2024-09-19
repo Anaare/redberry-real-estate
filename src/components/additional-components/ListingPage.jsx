@@ -1,54 +1,110 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Button from './Button';
 import styles from './ListingPage.module.css';
-import PropertyCard from './PropertyCard';
 
-function ListingPage() {
+function ListingPage({ property, onClose, agents }) {
+	{
+		/* 
+		
+		3. Buttons:
+		
+			2. second left Icon => must move back  in related listings
+			3. right Icon => must move further in listings list
+			4. delete listing (DELETE operation imo)
+		*/
+	}
+
+	const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
+
+	const [propertyDataById, setPropertyDataId] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	useEffect(() => {
+		const fetchPropertyData = async () => {
+			try {
+				const response = await fetch(
+					`https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${property.id}`,
+					{
+						method: 'GET',
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+					}
+				);
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+
+				const data = await response.json();
+				setPropertyDataId(data);
+			} catch (e) {
+				setError(e.message);
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchPropertyData();
+	}, []);
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error: {error.message}</p>;
+
+	const [agentInfo] = agents.filter(
+		agent => agent.id === propertyDataById.agent_id
+	);
+
 	return (
 		<div>
 			<Header />
 			<div className={styles.container}>
-				<img src="./images/icons/left.svg" className={styles.firstIcon} />
+				<Link to={`/`}>
+					<img src="./images/icons/left.svg" className={styles.firstIcon} />
+				</Link>
 				<div className={styles.propertyContent}>
-					<img src="./images/property-images/property-1.png" alt="property-1" />
+					<img src={property.image} alt="property-1" />
 					<div className={styles.description}>
-						<h1>80, 458 ₾</h1>
+						<h1>{property.price} ₾</h1>
 						<div className={styles.details}>
 							<div className={styles.info}>
 								<img
 									src="./images/icons/location-marker.svg"
 									alt="location icon"
 								/>
-								<span>თბილისი, ი. ჭავჭავაძის 53</span>
+								<span>
+									{property.city.name}, {property.address}
+								</span>
 							</div>
 							<div className={styles.info}>
 								<img src="./images/icons/area.svg" alt="area icon" />
-								<span>ფართი 55 მ²</span>
+								<span>ფართი {property.area} მ²</span>
 							</div>
 							<div className={styles.info}>
 								<img src="./images/icons/bed.svg" alt="bed icon" />
-								<span>საძინებელი 2</span>
+								<span>{property.bedrooms} </span>
 							</div>
 							<div className={styles.info}>
 								<img src="./images/icons/zip-code.svg" alt="zip code icon" />
-								<span>საფოსტო ინდექსი 2525</span>
+								<span>{property.zip_code}</span>
 							</div>
-							<p>
-								იყიდება ბინა ჭავჭავაძის ქუჩაზე, ვაკეში. ბინა არის ახალი
-								რემონტით, ორი საძინებლით და დიდი აივნით. მოწყობილია ავეჯითა და
-								ტექნიკით.
-							</p>
+							<p>{property.description}</p>
 						</div>
 						<div className={styles.agentInfo}>
-							<img src="./images/agents/agent-1.png" alt="agent-name" />
+							<img src={agentInfo.avatar} alt="agent-name" />
 							<div>
-								<p>სოფიო გელოვანი</p> {/* data from API*/}
+								<p>
+									{agentInfo.name} {agentInfo.surname}
+								</p>
+
 								<span>აგენტი</span>
 							</div>
 							<div className={styles.contactInfo}>
 								<div className={styles.mail}>
 									<img src="./images/icons/envelope.svg" alt="envelope icon" />
-									<p>sophio.gelovani@redberry.ge</p> {/* data from API */}
+									<p>a@redberry.ge</p> {/* data from API */}
 								</div>
 								<div className={styles.phone}>
 									<img src="./images/icons/phone.svg" alt="phone icon" />
@@ -68,10 +124,7 @@ function ListingPage() {
 				<div className={styles.propertiesContainer}>
 					<img src="./images/icons/left.svg" className={styles.secondIcon} />
 					<div className={styles.propertiesList}>
-						<PropertyCard /> {/* based on related info */}
-						<PropertyCard /> {/* based on related info */}
-						<PropertyCard /> {/* based on related info */}
-						<PropertyCard /> {/* based on related info */}
+						{/* Property Card based on the related info */}
 					</div>
 					<img src="./images/icons/right.svg" className={styles.thirdIcon} />
 				</div>

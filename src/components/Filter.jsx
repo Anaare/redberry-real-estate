@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FilterByCheckbox from './additional-components/FilterByCheckbox';
 import Button from './additional-components/Button';
 import Region from './additional-components/Region';
@@ -15,8 +16,10 @@ export default function Filter({
 	setMinArea,
 	setMaxArea,
 	onFilterChange,
+	onAddAgentClick,
 }) {
 	const [activeFilter, setActiveFilter] = useState(null);
+	const navigate = useNavigate();
 
 	const handleRegionFilter = () => {
 		setActiveFilter('region');
@@ -54,6 +57,14 @@ export default function Filter({
 		setActiveFilter(null);
 	};
 
+	const handleAddListing = () => {
+		navigate('/add-listing');
+	};
+
+	const handleAddAgent = () => {
+		navigate('/add-agent');
+	};
+
 	useEffect(() => {
 		const handleKeyDown = event => {
 			if (event.key === 'Escape') {
@@ -75,7 +86,7 @@ export default function Filter({
 					რეგიონი
 				</FilterByCheckbox>
 				<FilterByCheckbox handleClick={handlePriceRangeFilter}>
-					საფასო კატეგორია
+					ფასის კატეგორია
 				</FilterByCheckbox>
 				<FilterByCheckbox handleClick={handleAreaFilter}>
 					ფართობი
@@ -85,8 +96,12 @@ export default function Filter({
 				</FilterByCheckbox>
 			</div>
 			<div className={styles.addButtons}>
-				<Button className={styles.addListing}>+ ლისტინგის დამატება</Button>
-				<Button className={styles.addAgent}>+ აგენტის დამატება</Button>
+				<Button className={styles.addListing} onClick={handleAddListing}>
+					+ ლისტინგის დამატება
+				</Button>
+				<Button className={styles.addAgent} onClick={onAddAgentClick}>
+					+ აგენტის დამატება
+				</Button>
 			</div>
 			{activeFilter === 'region' && (
 				<Region

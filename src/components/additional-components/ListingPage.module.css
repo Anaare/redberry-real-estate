@@ -127,8 +127,8 @@
 	align-items: center;
 	justify-content: flex-start;
 	position: absolute;
-	top: 540px;
-	left: 850px;
+	top: 440px;
+	left: 865px;
 }
 
 .mail,
@@ -165,7 +165,6 @@
 	width: 131px;
 	height: 34px;
 	padding: 10px;
-	gap: 10px;
 	border-radius: 8px;
 	border: 1px solid #676e76;
 	font-family: 'FiraGO', sans-serif;
@@ -176,7 +175,7 @@
 	color: #676e76;
 	background-color: #fff;
 	white-space: nowrap;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .releasedInfo {

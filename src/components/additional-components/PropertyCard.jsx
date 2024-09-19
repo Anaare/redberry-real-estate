@@ -1,12 +1,17 @@
-import { useState } from 'react';
-import styles from './PropertyCard.module.css';
+import { Link } from 'react-router-dom';
 import Tag from './Tag';
+import styles from './PropertyCard.module.css';
 
-function PropertyCard({ property }) {
+function PropertyCard({ property, onSelect }) {
+	const handleClick = () => {
+		onSelect(property.id);
+	};
 	return (
 		<div className={styles.property}>
 			{property.is_rental === 0 ? <Tag>იყიდება</Tag> : <Tag>ქირავდება</Tag>}
-			<img src={property.image} />
+			<Link to={`/listing/${property.id}`}>
+				<img src={property.image} onClick={handleClick} />
+			</Link>
 
 			<div className={styles.propertyInfo}>
 				<h1> {property.price} ₾ </h1>
