@@ -1,28 +1,33 @@
+import { useState } from 'react';
 import styles from './PropertyCard.module.css';
+import Tag from './Tag';
 
-function PropertyCard() {
+function PropertyCard({ property }) {
 	return (
 		<div className={styles.property}>
-			<img src="./images/property-images/property-1.png" />
+			{property.is_rental === 0 ? <Tag>იყიდება</Tag> : <Tag>ქირავდება</Tag>}
+			<img src={property.image} />
 
 			<div className={styles.propertyInfo}>
-				<h1>80 000 ₾ </h1>
+				<h1> {property.price} ₾ </h1>
 				<div className={styles.location}>
 					<img src="./images/icons/location-marker.svg" alt="location icon" />
-					<p className={styles.location}>თბილისი, ი.ჭავჭავაძის 53</p>
+					<p className={styles.location}>
+						{property.city.name}, {property.address}
+					</p>
 				</div>
 				<div className={styles.details}>
 					<div className={styles.detail}>
 						<img src="./images/icons/bed.svg" alt="bed icon" />
-						<span>2</span>
+						<span>{property.bedrooms}</span>
 					</div>
 					<div className={styles.detail}>
 						<img src="./images/icons/area.svg" alt="area icon" />
-						<span>55 მ²</span>
+						<span>{property.area} მ²</span>
 					</div>
 					<div className={styles.detail}>
 						<img src="./images/icons/zip-code.svg" alt="zip code icon" />
-						<span>0160</span>
+						<span>{property.zip_code}</span>
 					</div>
 				</div>
 			</div>

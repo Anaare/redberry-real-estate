@@ -89,3 +89,21 @@
 	text-align: left;
 	color: #021526b2;
 }
+
+.tag {
+	width: 90px;
+	height: 26px;
+	position: relative;
+	top: 50px;
+	left: 15px;
+	padding: 6px;
+	border-radius: 15px;
+	background-color: rgba(2, 21, 38, 0.5);
+	color: #fff;
+	font-family: 'FiraGO', sans-serif;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 14.4px;
+	letter-spacing: 0.04em;
+	text-align: center;
+}

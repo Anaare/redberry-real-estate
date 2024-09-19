@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from './Button';
 import styles from './Region.module.css';
 
-export default function Region({ data, setSelectedRegion, onClose }) {
+export default function Region({ regions, setSelectedRegion, onClose }) {
 	const [selectedRegion, setSelectedRegionLocal] = useState(null);
 
 	const handleCheckboxChange = regionName => {
@@ -18,7 +18,7 @@ export default function Region({ data, setSelectedRegion, onClose }) {
 		<div className={styles.container}>
 			<h4>რეგიონის მიხედვით</h4>
 			<ul className={styles.regions}>
-				{data.map(region => {
+				{regions.map(region => {
 					return (
 						<li key={region.id}>
 							<input

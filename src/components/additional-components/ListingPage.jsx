@@ -2,6 +2,7 @@ import Header from '../Header';
 import Button from './Button';
 import styles from './ListingPage.module.css';
 import PropertyCard from './PropertyCard';
+
 function ListingPage() {
 	return (
 		<div>
