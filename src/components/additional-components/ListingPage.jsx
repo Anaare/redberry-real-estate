@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../Header';
 import Button from './Button';
 import styles from './ListingPage.module.css';
 
@@ -40,6 +39,7 @@ function ListingPage({ property, onClose, agents }) {
 				}
 
 				const data = await response.json();
+				console.log(data);
 				setPropertyDataId(data);
 			} catch (e) {
 				setError(e.message);
@@ -48,18 +48,15 @@ function ListingPage({ property, onClose, agents }) {
 			}
 		};
 		fetchPropertyData();
-	}, []);
+	}, [property.id]);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
-	const [agentInfo] = agents.filter(
-		agent => agent.id === propertyDataById.agent_id
-	);
+	const agentInfo = propertyDataById?.agent;
 
 	return (
 		<div>
-			<Header />
 			<div className={styles.container}>
 				<Link to={`/`}>
 					<img src="./images/icons/left.svg" className={styles.firstIcon} />
@@ -104,11 +101,11 @@ function ListingPage({ property, onClose, agents }) {
 							<div className={styles.contactInfo}>
 								<div className={styles.mail}>
 									<img src="./images/icons/envelope.svg" alt="envelope icon" />
-									<p>a@redberry.ge</p> {/* data from API */}
+									<p>{agentInfo.email}</p> {/* data from API */}
 								</div>
 								<div className={styles.phone}>
 									<img src="./images/icons/phone.svg" alt="phone icon" />
-									<p>577 77 77 77</p> {/* data from API */}
+									<p>{agentInfo.phone}</p>
 								</div>
 							</div>
 						</div>
