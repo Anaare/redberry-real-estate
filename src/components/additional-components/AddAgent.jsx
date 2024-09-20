@@ -122,6 +122,8 @@ function AddAgent({ onClose }) {
 			}
 
 			const result = await response.json();
+			if (onAgentCreated) onAgentCreated(result.id);
+
 			console.log('Agent added successfully:', result);
 
 			if (onClose) onClose();

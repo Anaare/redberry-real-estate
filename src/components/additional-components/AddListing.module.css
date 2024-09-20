@@ -110,7 +110,8 @@
 .location input[type='text'],
 .location input[type='number'],
 .location select,
-.details select {
+.details select,
+.agentBtn {
 	width: 384px;
 	height: 42px;
 	padding: 8px;
@@ -223,4 +224,18 @@
 	background-color: #fff;
 	color: #f93b1d;
 	border: 1px solid #f93b1d;
+}
+
+.agent {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.agentBtn {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	justify-content: center;
+	background-color: #fff;
 }

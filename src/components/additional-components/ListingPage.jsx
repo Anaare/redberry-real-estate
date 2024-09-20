@@ -1,21 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styles from './ListingPage.module.css';
-
-function ListingPage({ property, onClose, agents }) {
-	{
-		/* 
-		
-		3. Buttons:
-		
-			2. second left Icon => must move back  in related listings
-			3. right Icon => must move further in listings list
-			4. delete listing (DELETE operation imo)
-		*/
-	}
-
+import FilterBox from './FilterBox';
+function ListingPage({ property, onClose, agents, properties }) {
 	const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
+	const navigate = useNavigate();
 
 	const [propertyDataById, setPropertyDataId] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -54,6 +44,34 @@ function ListingPage({ property, onClose, agents }) {
 	if (error) return <p>Error: {error.message}</p>;
 
 	const agentInfo = propertyDataById?.agent;
+
+	const handleDelete = async () => {
+		try {
+			const response = await fetch(
+				`https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${property.id}`,
+				{
+					method: 'DELETE',
+					headers: {
+						accept: 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// Optionally, show a success message
+			alert('Listing deleted successfully.');
+
+			// Navigate back to the home page or another page
+			navigate('/');
+		} catch (e) {
+			// Handle error if needed
+			alert(`Failed to delete listing: ${e.message}`);
+		}
+	};
 
 	return (
 		<div>
@@ -101,7 +119,7 @@ function ListingPage({ property, onClose, agents }) {
 							<div className={styles.contactInfo}>
 								<div className={styles.mail}>
 									<img src="/images/icons/envelope.svg" alt="envelope icon" />
-									<p>{agentInfo.email}</p> {/* data from API */}
+									<p>{agentInfo.email}</p>
 								</div>
 								<div className={styles.phone}>
 									<img src="./images/icons/phone.svg" alt="phone icon" />
@@ -110,7 +128,9 @@ function ListingPage({ property, onClose, agents }) {
 							</div>
 						</div>
 						<div>
-							<Button className={styles.btn}>ლისტინგის წაშლა</Button>
+							<Button className={styles.btn} onClick={handleDelete}>
+								ლისტინგის წაშლა
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -119,11 +139,9 @@ function ListingPage({ property, onClose, agents }) {
 			<div className={styles.relatedProperties}>
 				<h1>ბინები მსგავს ლოკაციაზე</h1>
 				<div className={styles.propertiesContainer}>
-					<img src="/images/icons/left.svg" className={styles.secondIcon} />
-					<div className={styles.propertiesList}>
-						{/* Property Card based on the related info */}
+					<div>
+						<FilterBox property={property} properties={properties} />
 					</div>
-					<img src="/images/icons/right.svg" className={styles.thirdIcon} />
 				</div>
 			</div>
 		</div>

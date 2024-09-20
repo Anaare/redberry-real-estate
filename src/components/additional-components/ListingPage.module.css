@@ -25,7 +25,8 @@
 
 .propertyContent img {
 	width: 700px;
-	height: 565px;
+	height: 470px;
+	border-radius: 15px;
 }
 
 .description h1 {

@@ -14,7 +14,8 @@ const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 function App() {
 	const [regions, setRegions] = useState(null);
 	const [cities, setCities] = useState(null);
-	const [properties, setProperties] = useState([]);
+	const [properties, setProperties] = useState([]); // All properties from API
+	const [filteredProperties, setFilteredProperties] = useState([]); // Filtered properties based on filters
 	const [selectedPropertyId, setSelectedPropertyId] = useState(null);
 	const [agents, setAgents] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -99,6 +100,7 @@ function App() {
 
 				const data = await response.json();
 				setProperties(data);
+				setFilteredProperties(data); // Initialize filtered properties with all properties
 			} catch (e) {
 				setError(e.message);
 			} finally {
@@ -162,8 +164,31 @@ function App() {
 		setShowAddAgentModal(false);
 	};
 
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error.message}</p>;
+	const filterProperties = () => {
+		const filtered = properties.filter(property => {
+			const matchesRegion = filters.region
+				? property.region === selectedRegion
+				: true;
+			console.log(matchesRegion);
+			const matchesPrice = filters.price
+				? property.price >= minPrice && property.price <= maxPrice
+				: true;
+			const matchesArea = filters.area
+				? property.area >= minArea && property.area <= maxArea
+				: true;
+			const matchesBedrooms = filters.bedrooms
+				? property.bedrooms === bedrooms
+				: true;
+
+			return matchesRegion && matchesPrice && matchesArea && matchesBedrooms;
+		});
+
+		setFilteredProperties(filtered);
+	};
+
+	useEffect(() => {
+		filterProperties();
+	}, [selectedRegion, minPrice, maxPrice, minArea, maxArea, bedrooms, filters]);
 
 	const handlePropertySelect = propertyId => {
 		setSelectedPropertyId(propertyId);
@@ -176,6 +201,9 @@ function App() {
 	const selectedProperty = properties.find(
 		property => property.id === selectedPropertyId
 	);
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error: {error.message}</p>;
 
 	return (
 		<Router>
@@ -192,7 +220,7 @@ function App() {
 								setMaxPrice={setMaxPrice}
 								setMinArea={setMinArea}
 								setMaxArea={setMaxArea}
-								onFilterChange={() => {}} // filter LOGIC?!!!
+								onFilterChange={filterProperties} // Trigger filter logic
 								onAddAgentClick={openAddAgentModal}
 							/>
 							<FilteredInfo
@@ -207,7 +235,7 @@ function App() {
 								onClearAllFilters={handleClearAllFilters}
 							/>
 							<div className={styles.propertyCards}>
-								{properties.map(property => (
+								{filteredProperties.map(property => (
 									<PropertyCard
 										key={property.id}
 										property={property}
@@ -231,6 +259,7 @@ function App() {
 								property={selectedProperty}
 								onClose={handleCloseListingPage}
 								agents={agents}
+								properties={properties}
 							/>
 						)
 					}
