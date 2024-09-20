@@ -46,7 +46,7 @@
 
 .box {
 	width: 799px;
-	height: 370px;
+	height: 500px;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
