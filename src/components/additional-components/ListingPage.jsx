@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import styles from './ListingPage.module.css';
 import FilterBox from './FilterBox';
-function ListingPage({ property, onClose, agents, properties }) {
+function ListingPage({ property, onClose, properties }) {
 	const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 	const navigate = useNavigate();
 

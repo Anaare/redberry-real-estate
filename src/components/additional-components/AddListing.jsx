@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './AddListing.module.css';
 import Button from './Button';
 import AddAgent from './AddAgent';
 import { Link } from 'react-router-dom';
 const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 
-function AddListing({ regions, cities, agents, onClose }) {
+function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 	const [formData, setFormData] = useState({
 		is_rental: 0,
 		region_id: '',
@@ -25,6 +26,8 @@ function AddListing({ regions, cities, agents, onClose }) {
 	const fileInputRef = useRef(null);
 	const modalRef = useRef(null);
 	const [isAddAgentModalOpen, setIsAddAgentModalOpen] = useState(false);
+
+	const navigate = useNavigate();
 	const validateForm = () => {
 		let isValid = true;
 		const newErrors = {};
@@ -137,8 +140,10 @@ function AddListing({ regions, cities, agents, onClose }) {
 			}
 
 			const result = await response.json();
-			console.log('Listing added successfully:', result);
+			console.log(result);
+			// if (onListingAdded) onListingAdded(result);
 			if (onClose) onClose();
+			navigate('/');
 		} catch (error) {
 			console.error('Error adding listing:', error);
 			setErrors(prevErrors => ({

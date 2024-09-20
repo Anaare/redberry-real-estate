@@ -167,9 +167,8 @@ function App() {
 	const filterProperties = () => {
 		const filtered = properties.filter(property => {
 			const matchesRegion = filters.region
-				? property.region === selectedRegion
+				? property.city.region === selectedRegion // Adjust this if your property object has region information directly or through city
 				: true;
-			console.log(matchesRegion);
 			const matchesPrice = filters.price
 				? property.price >= minPrice && property.price <= maxPrice
 				: true;
@@ -180,7 +179,7 @@ function App() {
 				? property.bedrooms === bedrooms
 				: true;
 
-			return matchesRegion && matchesPrice && matchesArea && matchesBedrooms;
+			return matchesRegion || matchesPrice || matchesArea || matchesBedrooms;
 		});
 
 		setFilteredProperties(filtered);
@@ -204,6 +203,11 @@ function App() {
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
+
+	const handleListingAdded = newListing => {
+		setProperties(prevProperties => [newListing, ...prevProperties]);
+		setFilteredProperties(prevProperties => [newListing, ...prevProperties]); // Optionally update filtered properties as well
+	};
 
 	return (
 		<Router>
@@ -258,7 +262,6 @@ function App() {
 							<ListingPage
 								property={selectedProperty}
 								onClose={handleCloseListingPage}
-								agents={agents}
 								properties={properties}
 							/>
 						)
@@ -267,7 +270,12 @@ function App() {
 				<Route
 					path="/add-listing"
 					element={
-						<AddListing regions={regions} cities={cities} agents={agents} />
+						<AddListing
+							regions={regions}
+							cities={cities}
+							agents={agents}
+							onListingAdded={handleListingAdded}
+						/>
 					}
 				/>
 			</Routes>
