@@ -59,7 +59,7 @@ function ListingPage({ property, onClose, agents }) {
 		<div>
 			<div className={styles.container}>
 				<Link to={`/`}>
-					<img src="./images/icons/left.svg" className={styles.firstIcon} />
+					<img src="/images/icons/left.svg" className={styles.firstIcon} />
 				</Link>
 				<div className={styles.propertyContent}>
 					<img src={property.image} alt="property-1" />
@@ -68,7 +68,7 @@ function ListingPage({ property, onClose, agents }) {
 						<div className={styles.details}>
 							<div className={styles.info}>
 								<img
-									src="./images/icons/location-marker.svg"
+									src="/images/icons/location-marker.svg"
 									alt="location icon"
 								/>
 								<span>
@@ -76,15 +76,15 @@ function ListingPage({ property, onClose, agents }) {
 								</span>
 							</div>
 							<div className={styles.info}>
-								<img src="./images/icons/area.svg" alt="area icon" />
+								<img src="/images/icons/area.svg" alt="area icon" />
 								<span>ფართი {property.area} მ²</span>
 							</div>
 							<div className={styles.info}>
-								<img src="./images/icons/bed.svg" alt="bed icon" />
+								<img src="/images/icons/bed.svg" alt="bed icon" />
 								<span>{property.bedrooms} </span>
 							</div>
 							<div className={styles.info}>
-								<img src="./images/icons/zip-code.svg" alt="zip code icon" />
+								<img src="/images/icons/zip-code.svg" alt="zip code icon" />
 								<span>{property.zip_code}</span>
 							</div>
 							<p>{property.description}</p>
@@ -100,7 +100,7 @@ function ListingPage({ property, onClose, agents }) {
 							</div>
 							<div className={styles.contactInfo}>
 								<div className={styles.mail}>
-									<img src="./images/icons/envelope.svg" alt="envelope icon" />
+									<img src="/images/icons/envelope.svg" alt="envelope icon" />
 									<p>{agentInfo.email}</p> {/* data from API */}
 								</div>
 								<div className={styles.phone}>
@@ -119,11 +119,11 @@ function ListingPage({ property, onClose, agents }) {
 			<div className={styles.relatedProperties}>
 				<h1>ბინები მსგავს ლოკაციაზე</h1>
 				<div className={styles.propertiesContainer}>
-					<img src="./images/icons/left.svg" className={styles.secondIcon} />
+					<img src="/images/icons/left.svg" className={styles.secondIcon} />
 					<div className={styles.propertiesList}>
 						{/* Property Card based on the related info */}
 					</div>
-					<img src="./images/icons/right.svg" className={styles.thirdIcon} />
+					<img src="/images/icons/right.svg" className={styles.thirdIcon} />
 				</div>
 			</div>
 		</div>
