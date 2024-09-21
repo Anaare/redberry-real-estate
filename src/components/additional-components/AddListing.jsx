@@ -116,8 +116,6 @@ function AddListing({ regions, cities, initialAgents, onListingChange }) {
 		for (const key in formData) {
 			if (key === 'image' && formData[key] instanceof File) {
 				formDataPayload.append('image', formData[key]);
-			} else if (key === 'is_rental') {
-				formDataPayload.append(key, formData[key] ? '1' : '0');
 			} else if (formData[key] || formData[key] === 0) {
 				formDataPayload.append(key, formData[key]);
 			}
@@ -144,12 +142,12 @@ function AddListing({ regions, cities, initialAgents, onListingChange }) {
 			}
 
 			const result = await response.json();
+			alert('Listing Added Successfully 🎉');
 
 			if (onListingChange) {
 				onListingChange();
 			}
 			navigate('/');
-			alert('Listing Added succesfully 🚀');
 		} catch (error) {
 			console.error('Error adding listing:', error);
 			setErrors(prevErrors => ({
@@ -196,7 +194,7 @@ function AddListing({ regions, cities, initialAgents, onListingChange }) {
 										name="is_rental"
 										checked={!formData.is_rental}
 										onChange={() =>
-											setFormData(prev => ({ ...prev, is_rental: 0 }))
+											setFormData(prev => ({ ...prev, is_rental: false }))
 										}
 									/>
 									იყიდება
@@ -207,7 +205,7 @@ function AddListing({ regions, cities, initialAgents, onListingChange }) {
 										name="is_rental"
 										checked={formData.is_rental}
 										onChange={() =>
-											setFormData(prev => ({ ...prev, is_rental: 1 }))
+											setFormData(prev => ({ ...prev, is_rental: true }))
 										}
 									/>
 									ქირავდება

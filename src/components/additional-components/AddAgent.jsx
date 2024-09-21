@@ -13,49 +13,16 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 		avatar: null,
 	});
 
-	const [errors, setErrors] = useState({
+	const [previewUrl, setPreviewUrl] = useState('');
+	const fileInputRef = useRef(null);
+	const modalRef = useRef(null);
+
+	const [validationErrors, setValidationErrors] = useState({
 		name: '',
 		surname: '',
 		email: '',
 		phone: '',
 	});
-
-	const [previewUrl, setPreviewUrl] = useState('');
-	const fileInputRef = useRef(null);
-	const modalRef = useRef(null);
-
-	const validateForm = () => {
-		let isValid = true;
-		const newErrors = {
-			name: '',
-			surname: '',
-			email: '',
-			phone: '',
-		};
-
-		if (formData.name.length < 2) {
-			newErrors.name = 'სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს';
-			isValid = false;
-		}
-
-		if (formData.surname.length < 2) {
-			newErrors.surname = 'გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს';
-			isValid = false;
-		}
-
-		if (!formData.email.endsWith('@redberry.ge')) {
-			newErrors.email = 'ელ-ფოსტა უნდა მთავრდებოდეს @redberry.ge-ით';
-			isValid = false;
-		}
-
-		if (!/^\d+$/.test(formData.phone)) {
-			newErrors.phone = 'ტელეფონის ნომერი უნდა შეიცავდეს მხოლოდ ციფრებს';
-			isValid = false;
-		}
-
-		setErrors(newErrors);
-		return isValid;
-	};
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -82,6 +49,39 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 
 	const handlePhotoUploadClick = () => {
 		fileInputRef.current.click();
+	};
+
+	const validateForm = () => {
+		let isValid = true;
+		const errors = {
+			name: '',
+			surname: '',
+			email: '',
+			phone: '',
+		};
+
+		if (formData.name.length < 2) {
+			isValid = false;
+			errors.name = 'ჩაწერეთ ვალიდური მონაცემები';
+		}
+
+		if (formData.surname.length < 2) {
+			isValid = false;
+			errors.surname = 'ჩაწერეთ ვალიდური მონაცემები';
+		}
+
+		if (!formData.email.endsWith('@redberry.ge')) {
+			isValid = false;
+			errors.email = 'ჩაწერეთ ვალიდური მონაცემები';
+		}
+
+		if (!/^\d+$/.test(formData.phone)) {
+			isValid = false;
+			errors.phone = 'ჩაწერეთ ვალიდური მონაცემები';
+		}
+
+		setValidationErrors(errors);
+		return isValid;
 	};
 
 	const handleSubmit = async e => {
@@ -134,12 +134,10 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 			if (onClose) {
 				onClose();
 			}
+
+			alert('Agent Added Successfully 🎉');
 		} catch (error) {
 			console.error('Error adding agent:', error);
-			if (error.response) {
-				const errorText = await error.response.text();
-				console.error('Server error response:', errorText);
-			}
 		}
 	};
 
@@ -184,10 +182,14 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 										name="name"
 										value={formData.name}
 										onChange={handleChange}
+										className={validationErrors.name ? styles.invalid : ''}
 										required
 									/>
+									<span className={styles.validationInfo}>
+										<img src="/images/icons/tick.svg" alt="tick" />
+										{validationErrors.name || 'მინიმუმ 2 სიმბოლო'}
+									</span>
 								</label>
-								{errors.name && <p className={styles.error}>{errors.name}</p>}
 							</div>
 							<div>
 								<label>
@@ -197,12 +199,14 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 										name="surname"
 										value={formData.surname}
 										onChange={handleChange}
+										className={validationErrors.surname ? styles.invalid : ''}
 										required
 									/>
+									<span className={styles.validationInfo}>
+										<img src="/images/icons/tick.svg" alt="tick" />
+										{validationErrors.surname || 'მინიმუმ 2 სიმბოლო'}
+									</span>
 								</label>
-								{errors.surname && (
-									<p className={styles.error}>{errors.surname}</p>
-								)}
 							</div>
 							<div>
 								<label>
@@ -212,10 +216,14 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 										name="email"
 										value={formData.email}
 										onChange={handleChange}
+										className={validationErrors.email ? styles.invalid : ''}
 										required
 									/>
+									<span className={styles.validationInfo}>
+										<img src="/images/icons/tick.svg" alt="tick" />
+										{validationErrors.email || 'გამოიყენეთ @redberry.ge ფოსტა'}
+									</span>
 								</label>
-								{errors.email && <p className={styles.error}>{errors.email}</p>}
 							</div>
 							<div>
 								<label>
@@ -225,10 +233,14 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 										name="phone"
 										value={formData.phone}
 										onChange={handleChange}
+										className={validationErrors.phone ? styles.invalid : ''}
 										required
 									/>
+									<span className={styles.validationInfo}>
+										<img src="/images/icons/tick.svg" alt="tick" />
+										{validationErrors.phone || 'მხოლოდ რიცხვები'}
+									</span>
 								</label>
-								{errors.phone && <p className={styles.error}>{errors.phone}</p>}
 							</div>
 						</div>
 						<div>

@@ -153,24 +153,28 @@
 
 .error {
 	color: #f93b1d; /* Incorrect */
-	font-family: 'FiraGO', sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 16.8px;
-	margin-top: 4px;
+	--tick-color: #f93b1d;
 }
 
 .success {
 	color: #45a849; /* Correct */
-	font-family: 'FiraGO', sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 16.8px;
-	margin-top: 4px;
 }
 
-.info {
-	color: #021526; /* Green color for success */
-	font-size: 0.875rem; /* Adjust font size as needed */
-	margin-top: 0.25rem; /* Space between input and info text */
+.validationInfo {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 5px;
+	font-family: 'FiraGO', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.8px;
+	text-align: left;
+	color: #021526;
+}
+
+.validationInfo img {
+	width: 10px;
+	height: 8.18px;
+	fill: green;
 }

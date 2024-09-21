@@ -249,3 +249,22 @@
 	justify-content: center;
 	background-color: #fff;
 }
+
+.validationInfo {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 5px;
+	font-family: 'FiraGO', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16.8px;
+	text-align: left;
+	color: #021526;
+}
+
+.validationInfo img {
+	width: 10px;
+	height: 8.18px;
+	fill: green;
+}
