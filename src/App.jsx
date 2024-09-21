@@ -14,8 +14,8 @@ const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 function App() {
 	const [regions, setRegions] = useState(null);
 	const [cities, setCities] = useState(null);
-	const [properties, setProperties] = useState([]); // All properties from API
-	const [filteredProperties, setFilteredProperties] = useState([]); // Filtered properties based on filters
+	const [properties, setProperties] = useState([]);
+	const [filteredProperties, setFilteredProperties] = useState([]);
 	const [selectedPropertyId, setSelectedPropertyId] = useState(null);
 	const [agents, setAgents] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -32,7 +32,8 @@ function App() {
 		area: true,
 		bedrooms: true,
 	});
-	const [showAddAgentModal, setShowAddAgentModal] = useState(false); // State for modal visibility
+	const [showAddAgentModal, setShowAddAgentModal] = useState(false);
+	const [refreshData, setRefreshData] = useState(false);
 
 	useEffect(() => {
 		const fetchRegions = async () => {
@@ -138,7 +139,7 @@ function App() {
 		fetchProperties();
 		fetchAgents();
 		fetchCities();
-	}, []);
+	}, [refreshData]);
 
 	const handleRemoveFilter = filterType => {
 		setFilters(prevFilters => ({
@@ -201,13 +202,12 @@ function App() {
 		property => property.id === selectedPropertyId
 	);
 
+	const handleDataRefresh = () => {
+		setRefreshData(prevState => !prevState);
+	};
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
-
-	const handleListingAdded = newListing => {
-		setProperties(prevProperties => [newListing, ...prevProperties]);
-		setFilteredProperties(prevProperties => [newListing, ...prevProperties]); // Optionally update filtered properties as well
-	};
 
 	return (
 		<Router>
@@ -263,6 +263,7 @@ function App() {
 								property={selectedProperty}
 								onClose={handleCloseListingPage}
 								properties={properties}
+								onListingChange={handleDataRefresh}
 							/>
 						)
 					}
@@ -273,8 +274,8 @@ function App() {
 						<AddListing
 							regions={regions}
 							cities={cities}
-							agents={agents}
-							onListingAdded={handleListingAdded}
+							initialAgents={agents}
+							onListingChange={handleDataRefresh}
 						/>
 					}
 				/>

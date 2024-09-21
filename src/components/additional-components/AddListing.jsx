@@ -4,9 +4,10 @@ import styles from './AddListing.module.css';
 import Button from './Button';
 import AddAgent from './AddAgent';
 import { Link } from 'react-router-dom';
+
 const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 
-function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
+function AddListing({ regions, cities, initialAgents, onListingChange }) {
 	const [formData, setFormData] = useState({
 		is_rental: 0,
 		region_id: '',
@@ -25,9 +26,11 @@ function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 	const [previewUrl, setPreviewUrl] = useState('');
 	const fileInputRef = useRef(null);
 	const modalRef = useRef(null);
-	const [isAddAgentModalOpen, setIsAddAgentModalOpen] = useState(false);
 
+	const [isAddAgentModalOpen, setIsAddAgentModalOpen] = useState(false);
+	const [agents, setAgents] = useState(initialAgents);
 	const navigate = useNavigate();
+
 	const validateForm = () => {
 		let isValid = true;
 		const newErrors = {};
@@ -114,7 +117,6 @@ function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 			if (key === 'image' && formData[key] instanceof File) {
 				formDataPayload.append('image', formData[key]);
 			} else if (formData[key] || formData[key] === 0) {
-				// Include 0 values
 				formDataPayload.append(key, formData[key]);
 			}
 		}
@@ -141,8 +143,10 @@ function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 
 			const result = await response.json();
 			console.log(result);
-			// if (onListingAdded) onListingAdded(result);
-			if (onClose) onClose();
+
+			if (onListingChange) {
+				onListingChange();
+			}
 			navigate('/');
 		} catch (error) {
 			console.error('Error adding listing:', error);
@@ -156,25 +160,23 @@ function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 	};
 
 	const handleClick = () => {
-		setIsAddAgentModalOpen(true); // Open the AddAgent modal
+		setIsAddAgentModalOpen(true);
 	};
 
 	const closeAddAgentModal = () => {
-		setIsAddAgentModalOpen(false); // Close the AddAgent modal
+		setIsAddAgentModalOpen(false);
 	};
 
 	const handleAgentAdded = newAgent => {
-		// When a new agent is added, select the new agent in the dropdown
+		setAgents(prevAgents => [...prevAgents, newAgent]);
 		setFormData(prevFormData => ({
 			...prevFormData,
 			agent_id: newAgent.id,
 		}));
-		closeAddAgentModal(); // Close modal after adding
-		onAgentAdded(newAgent); // Add new agent to parent
-	};
-
-	const handleCancel = () => {
-		if (onClose) onClose();
+		closeAddAgentModal();
+		if (onListingChange) {
+			onListingChange();
+		}
 	};
 
 	return (
@@ -401,12 +403,8 @@ function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 							</div>
 							{errors.submit && <p className={styles.error}>{errors.submit}</p>}
 							<div className={styles.buttons}>
-								<Link to={`/`}>
-									<Button
-										className={styles.cancelBtn}
-										onClick={onClose}
-										type="button"
-									>
+								<Link to="/">
+									<Button className={styles.cancelBtn} type="button">
 										გაუქმება
 									</Button>
 								</Link>
@@ -422,6 +420,7 @@ function AddListing({ regions, cities, agents, onClose, onListingAdded }) {
 				<AddAgent
 					onClose={closeAddAgentModal}
 					onAgentAdded={handleAgentAdded}
+					onListingChange={onListingChange}
 				/>
 			)}
 		</div>

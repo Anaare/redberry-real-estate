@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './AddAgent.module.css';
 import Button from './Button';
 
 const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 
-function AddAgent({ onClose }) {
+function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 	const [formData, setFormData] = useState({
 		name: '',
 		surname: '',
@@ -122,11 +122,19 @@ function AddAgent({ onClose }) {
 			}
 
 			const result = await response.json();
-			if (onAgentCreated) onAgentCreated(result.id);
-
 			console.log('Agent added successfully:', result);
 
-			if (onClose) onClose();
+			if (onAgentAdded) {
+				onAgentAdded(result);
+			}
+
+			if (onListingChange) {
+				onListingChange();
+			}
+
+			if (onClose) {
+				onClose();
+			}
 		} catch (error) {
 			console.error('Error adding agent:', error);
 			if (error.response) {
