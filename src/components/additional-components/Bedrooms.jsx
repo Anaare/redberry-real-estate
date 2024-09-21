@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import styles from './RangeInfo.module.css';
 import Button from './Button';
-function Bedrooms({ onClose }) {
+import styles from './RangeInfo.module.css';
+
+function Bedrooms({ onClose, setBedrooms }) {
 	const [selectedBedrooms, setSelectedBedrooms] = useState(2);
 
 	const handleButtonClick = () => {
-		setSelectedBedrooms(2);
+		setBedrooms(selectedBedrooms);
 		onClose();
 	};
 
@@ -13,7 +14,12 @@ function Bedrooms({ onClose }) {
 		<div className={styles.bedroomsContainer}>
 			<h4>საძინებლის რაოდენობა</h4>
 			<div className={styles.bedroomsAmount} id="bedroomsAmount">
-				<input type="text" value={selectedBedrooms || ''} disabled />
+				<input
+					type="number"
+					value={selectedBedrooms}
+					onChange={e => setSelectedBedrooms(Number(e.target.value))}
+					min="1"
+				/>
 			</div>
 
 			<div className={styles.bedroomBtn}>

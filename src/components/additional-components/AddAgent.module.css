@@ -150,3 +150,27 @@
 	border: 1px solid #f93b1d;
 	color: #fff;
 }
+
+.error {
+	color: #f93b1d; /* Incorrect */
+	font-family: 'FiraGO', sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16.8px;
+	margin-top: 4px;
+}
+
+.success {
+	color: #45a849; /* Correct */
+	font-family: 'FiraGO', sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16.8px;
+	margin-top: 4px;
+}
+
+.info {
+	color: #021526; /* Green color for success */
+	font-size: 0.875rem; /* Adjust font size as needed */
+	margin-top: 0.25rem; /* Space between input and info text */
+}

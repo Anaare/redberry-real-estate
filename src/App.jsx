@@ -20,17 +20,17 @@ function App() {
 	const [agents, setAgents] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [selectedRegion, setSelectedRegion] = useState('თბილისი');
-	const [minPrice, setMinPrice] = useState(20000);
-	const [maxPrice, setMaxPrice] = useState(100000);
-	const [minArea, setMinArea] = useState(55);
-	const [maxArea, setMaxArea] = useState(90);
-	const [bedrooms, setBedrooms] = useState(1);
+	const [selectedRegion, setSelectedRegion] = useState('');
+	const [minPrice, setMinPrice] = useState('');
+	const [maxPrice, setMaxPrice] = useState('');
+	const [minArea, setMinArea] = useState('');
+	const [maxArea, setMaxArea] = useState('');
+	const [bedrooms, setBedrooms] = useState('');
 	const [filters, setFilters] = useState({
-		region: true,
-		price: true,
-		area: true,
-		bedrooms: true,
+		region: false,
+		price: false,
+		area: false,
+		bedrooms: false,
 	});
 	const [showAddAgentModal, setShowAddAgentModal] = useState(false);
 	const [refreshData, setRefreshData] = useState(false);
@@ -146,6 +146,25 @@ function App() {
 			...prevFilters,
 			[filterType]: false,
 		}));
+
+		switch (filterType) {
+			case 'region':
+				setSelectedRegion('');
+				break;
+			case 'price':
+				setMinPrice('');
+				setMaxPrice('');
+				break;
+			case 'area':
+				setMinArea('');
+				setMaxArea('');
+				break;
+			case 'bedrooms':
+				setBedrooms('');
+				break;
+			default:
+				break;
+		}
 	};
 
 	const handleClearAllFilters = () => {
@@ -155,6 +174,12 @@ function App() {
 			area: false,
 			bedrooms: false,
 		});
+		setSelectedRegion('');
+		setMinPrice('');
+		setMaxPrice('');
+		setMinArea('');
+		setMaxArea('');
+		setBedrooms('');
 	};
 
 	const openAddAgentModal = () => {
@@ -167,20 +192,23 @@ function App() {
 
 	const filterProperties = () => {
 		const filtered = properties.filter(property => {
-			const matchesRegion = filters.region
-				? property.city.region === selectedRegion // Adjust this if your property object has region information directly or through city
-				: true;
-			const matchesPrice = filters.price
-				? property.price >= minPrice && property.price <= maxPrice
-				: true;
-			const matchesArea = filters.area
-				? property.area >= minArea && property.area <= maxArea
-				: true;
-			const matchesBedrooms = filters.bedrooms
-				? property.bedrooms === bedrooms
-				: true;
+			const matchesRegion =
+				!filters.region || property.city.region.name === selectedRegion;
 
-			return matchesRegion || matchesPrice || matchesArea || matchesBedrooms;
+			const matchesPrice =
+				!filters.price ||
+				((minPrice !== '' ? property.price >= parseInt(minPrice) : true) &&
+					(maxPrice !== '' ? property.price <= parseInt(maxPrice) : true));
+
+			const matchesArea =
+				!filters.area ||
+				((minArea === '' || property.area >= parseInt(minArea)) &&
+					(maxArea === '' || property.area <= parseInt(maxArea)));
+
+			const matchesBedrooms =
+				!filters.bedrooms || property.bedrooms === parseInt(bedrooms);
+
+			return matchesRegion && matchesPrice && matchesArea && matchesBedrooms;
 		});
 
 		setFilteredProperties(filtered);
@@ -206,6 +234,37 @@ function App() {
 		setRefreshData(prevState => !prevState);
 	};
 
+	const handleFilterChange = (filterType, value) => {
+		console.log('Filter change:', filterType, value);
+		setFilters(prevFilters => ({
+			...prevFilters,
+			[filterType]: true,
+		}));
+
+		switch (filterType) {
+			case 'region':
+				setSelectedRegion(value);
+				break;
+			case 'price':
+				if (typeof value === 'object' && value !== null) {
+					if (value.min !== undefined) setMinPrice(value.min);
+					if (value.max !== undefined) setMaxPrice(value.max);
+				}
+				break;
+			case 'area':
+				if (typeof value === 'object' && value !== null) {
+					setMinArea(value.min);
+					setMaxArea(value.max);
+				}
+				break;
+			case 'bedrooms':
+				setBedrooms(value);
+				break;
+			default:
+				break;
+		}
+	};
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
@@ -219,15 +278,24 @@ function App() {
 						<div className="main-container">
 							<Filter
 								regions={regions}
-								setSelectedRegion={setSelectedRegion}
-								setMinPrice={setMinPrice}
-								setMaxPrice={setMaxPrice}
-								setMinArea={setMinArea}
-								setMaxArea={setMaxArea}
+								setSelectedRegion={value => handleFilterChange('region', value)}
+								setMinPrice={value =>
+									handleFilterChange('price', { min: value, max: maxPrice })
+								}
+								setMaxPrice={value =>
+									handleFilterChange('price', { min: minPrice, max: value })
+								}
+								setMinArea={value =>
+									handleFilterChange('area', { min: value, max: maxArea })
+								}
+								setMaxArea={value =>
+									handleFilterChange('area', { min: minArea, max: value })
+								}
+								setBedrooms={value => handleFilterChange('bedrooms', value)}
 								onFilterChange={filterProperties}
 								onAddAgentClick={openAddAgentModal}
 							/>
-							{/* <FilteredInfo
+							<FilteredInfo
 								region={selectedRegion}
 								minPrice={minPrice}
 								maxPrice={maxPrice}
@@ -237,15 +305,21 @@ function App() {
 								filters={filters}
 								onRemoveFilter={handleRemoveFilter}
 								onClearAllFilters={handleClearAllFilters}
-							/> */}
+							/>
 							<div className={styles.propertyCards}>
-								{filteredProperties.map(property => (
-									<PropertyCard
-										key={property.id}
-										property={property}
-										onSelect={handlePropertySelect}
-									/>
-								))}
+								{filteredProperties.length > 0 ? (
+									filteredProperties.map(property => (
+										<PropertyCard
+											key={property.id}
+											property={property}
+											onSelect={handlePropertySelect}
+										/>
+									))
+								) : (
+									<div className={styles.noResults}>
+										აღნიშნული მონაცემებით განცხადება არ იძებნება
+									</div>
+								)}
 							</div>
 							{showAddAgentModal && (
 								<div className={styles.modal}>

@@ -48,7 +48,7 @@ export default function FilteredInfo({
 			)}
 			{filters.bedrooms && (
 				<div className={styles.info}>
-					<p>{bedrooms}</p>
+					<p>{bedrooms} საძინებელი</p>
 					<img
 						src="./images/icons/remove.svg"
 						alt="x"

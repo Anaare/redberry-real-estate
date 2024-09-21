@@ -122,7 +122,6 @@ function AddAgent({ onClose, onListingChange, onAgentAdded }) {
 			}
 
 			const result = await response.json();
-			alert('Agent added successfully 🚀');
 
 			if (onAgentAdded) {
 				onAgentAdded(result);

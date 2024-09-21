@@ -15,54 +15,24 @@ export default function Filter({
 	setMaxPrice,
 	setMinArea,
 	setMaxArea,
+	setBedrooms,
 	onFilterChange,
 	onAddAgentClick,
 }) {
 	const [activeFilter, setActiveFilter] = useState(null);
 	const navigate = useNavigate();
 
-	const handleRegionFilter = () => {
-		setActiveFilter('region');
-		onFilterChange();
+	const handleFilterClick = filterType => {
+		setActiveFilter(activeFilter === filterType ? null : filterType);
 	};
 
-	const handleRegionClose = () => {
+	const handleFilterClose = () => {
 		setActiveFilter(null);
-	};
-
-	const handleBedroomFilter = () => {
-		setActiveFilter('bedroom');
 		onFilterChange();
-	};
-
-	const handleBedroomClose = () => {
-		setActiveFilter(null);
-	};
-
-	const handlePriceRangeFilter = () => {
-		setActiveFilter('priceRange');
-		onFilterChange();
-	};
-
-	const handlePriceRangeClose = () => {
-		setActiveFilter(null);
-	};
-
-	const handleAreaFilter = () => {
-		setActiveFilter('area');
-		onFilterChange();
-	};
-
-	const handleAreaClose = () => {
-		setActiveFilter(null);
 	};
 
 	const handleAddListing = () => {
 		navigate('/add-listing');
-	};
-
-	const handleAddAgent = () => {
-		navigate('/add-agent');
 	};
 
 	useEffect(() => {
@@ -82,16 +52,16 @@ export default function Filter({
 	return (
 		<div className={styles.filter}>
 			<div className={styles.filterItems}>
-				<FilterByCheckbox handleClick={handleRegionFilter}>
+				<FilterByCheckbox handleClick={() => handleFilterClick('region')}>
 					რეგიონი
 				</FilterByCheckbox>
-				<FilterByCheckbox handleClick={handlePriceRangeFilter}>
+				<FilterByCheckbox handleClick={() => handleFilterClick('priceRange')}>
 					ფასის კატეგორია
 				</FilterByCheckbox>
-				<FilterByCheckbox handleClick={handleAreaFilter}>
+				<FilterByCheckbox handleClick={() => handleFilterClick('area')}>
 					ფართობი
 				</FilterByCheckbox>
-				<FilterByCheckbox handleClick={handleBedroomFilter}>
+				<FilterByCheckbox handleClick={() => handleFilterClick('bedroom')}>
 					საძინებლის რაოდენობა
 				</FilterByCheckbox>
 			</div>
@@ -107,22 +77,24 @@ export default function Filter({
 				<Region
 					regions={regions}
 					setSelectedRegion={setSelectedRegion}
-					onClose={handleRegionClose}
+					onClose={handleFilterClose}
 				/>
 			)}
-			{activeFilter === 'bedroom' && <Bedrooms onClose={handleBedroomClose} />}
+			{activeFilter === 'bedroom' && (
+				<Bedrooms setBedrooms={setBedrooms} onClose={handleFilterClose} />
+			)}
 			{activeFilter === 'priceRange' && (
 				<PriceRange
-					onClose={handlePriceRangeClose}
 					setMinPrice={setMinPrice}
 					setMaxPrice={setMaxPrice}
+					onClose={handleFilterClose}
 				/>
 			)}
 			{activeFilter === 'area' && (
 				<Area
-					onClose={handleAreaClose}
 					setMinArea={setMinArea}
 					setMaxArea={setMaxArea}
+					onClose={handleFilterClose}
 				/>
 			)}
 		</div>

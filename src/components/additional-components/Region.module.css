@@ -65,3 +65,7 @@
 	text-align: center;
 	background-color: #f93b1d;
 }
+
+.acceptBtn:active {
+	background-color: #df3014;
+}
