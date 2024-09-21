@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from './Button';
 import FilterBox from './FilterBox';
 import DeleteListingModal from './DeleteListingModal';
 import styles from './ListingPage.module.css';
 
-function ListingPage({ property, onClose, properties, onListingChange }) {
-	const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
+const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
+
+function ListingPage({ properties, onListingChange }) {
+	const { id } = useParams();
 	const navigate = useNavigate();
 
-	const [propertyDataById, setPropertyDataId] = useState(null);
-
+	const [propertyData, setPropertyData] = useState(null);
 	const [showDeleteListingModal, setShowDeleteListingModal] = useState(false);
-
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -20,7 +20,7 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 		const fetchPropertyData = async () => {
 			try {
 				const response = await fetch(
-					`https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${property.id}`,
+					`https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${id}`,
 					{
 						method: 'GET',
 						headers: {
@@ -35,34 +35,35 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 				}
 
 				const data = await response.json();
-				console.log(data);
-				setPropertyDataId(data);
+				setPropertyData(data);
 			} catch (e) {
 				setError(e.message);
 			} finally {
 				setLoading(false);
 			}
 		};
+
 		fetchPropertyData();
-	}, [property.id]);
+	}, [id]);
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error.message}</p>;
+	if (error) return <p>Error: {error}</p>;
+	if (!propertyData) return <p>No property found</p>;
 
-	const agentInfo = propertyDataById?.agent;
+	const agentInfo = propertyData.agent;
 
 	const openDeleteListingModal = () => {
 		setShowDeleteListingModal(true);
 	};
 
-	const closeAddAgentModal = () => {
+	const closeDeleteListingModal = () => {
 		setShowDeleteListingModal(false);
 	};
 
 	const handleDelete = async () => {
 		try {
 			const response = await fetch(
-				`https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${property.id}`,
+				`https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${id}`,
 				{
 					method: 'DELETE',
 					headers: {
@@ -90,13 +91,17 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 	return (
 		<div>
 			<div className={styles.container}>
-				<Link to={`/`}>
-					<img src="/images/icons/left.svg" className={styles.firstIcon} />
+				<Link to="/">
+					<img
+						src="/images/icons/left.svg"
+						className={styles.firstIcon}
+						alt="Back"
+					/>
 				</Link>
 				<div className={styles.propertyContent}>
-					<img src={property.image} alt="property-1" />
+					<img src={propertyData.image} alt="property" />
 					<div className={styles.description}>
-						<h1>{property.price} ₾</h1>
+						<h1>{propertyData.price} ₾</h1>
 						<div className={styles.details}>
 							<div className={styles.info}>
 								<img
@@ -104,30 +109,32 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 									alt="location icon"
 								/>
 								<span>
-									{property.city.name}, {property.address}
+									{propertyData.city.name}, {propertyData.address}
 								</span>
 							</div>
 							<div className={styles.info}>
 								<img src="/images/icons/area.svg" alt="area icon" />
-								<span>ფართი {property.area} მ²</span>
+								<span>ფართი {propertyData.area} მ²</span>
 							</div>
 							<div className={styles.info}>
 								<img src="/images/icons/bed.svg" alt="bed icon" />
-								<span>{property.bedrooms} </span>
+								<span>{propertyData.bedrooms} </span>
 							</div>
 							<div className={styles.info}>
 								<img src="/images/icons/zip-code.svg" alt="zip code icon" />
-								<span>{property.zip_code}</span>
+								<span>{propertyData.zip_code}</span>
 							</div>
-							<p>{property.description}</p>
+							<p>{propertyData.description}</p>
 						</div>
 						<div className={styles.agentInfo}>
-							<img src={agentInfo.avatar} alt="agent-name" />
+							<img
+								src={agentInfo.avatar}
+								alt={`${agentInfo.name} ${agentInfo.surname}`}
+							/>
 							<div>
 								<p>
 									{agentInfo.name} {agentInfo.surname}
 								</p>
-
 								<span>აგენტი</span>
 							</div>
 							<div className={styles.contactInfo}>
@@ -136,7 +143,7 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 									<p>{agentInfo.email}</p>
 								</div>
 								<div className={styles.phone}>
-									<img src="./images/icons/phone.svg" alt="phone icon" />
+									<img src="/images/icons/phone.svg" alt="phone icon" />
 									<p>{agentInfo.phone}</p>
 								</div>
 							</div>
@@ -154,13 +161,16 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 				<h1>ბინები მსგავს ლოკაციაზე</h1>
 				<div className={styles.propertiesContainer}>
 					<div>
-						<FilterBox property={property} properties={properties} />
+						<FilterBox property={propertyData} properties={properties} />
 					</div>
 				</div>
 			</div>
 
 			{showDeleteListingModal && (
-				<DeleteListingModal onConfirm={handleDelete} onClose={onClose} />
+				<DeleteListingModal
+					onConfirm={handleDelete}
+					onClose={closeDeleteListingModal}
+				/>
 			)}
 		</div>
 	);

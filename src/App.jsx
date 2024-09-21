@@ -227,7 +227,7 @@ function App() {
 								onFilterChange={filterProperties}
 								onAddAgentClick={openAddAgentModal}
 							/>
-							<FilteredInfo
+							{/* <FilteredInfo
 								region={selectedRegion}
 								minPrice={minPrice}
 								maxPrice={maxPrice}
@@ -237,7 +237,7 @@ function App() {
 								filters={filters}
 								onRemoveFilter={handleRemoveFilter}
 								onClearAllFilters={handleClearAllFilters}
-							/>
+							/> */}
 							<div className={styles.propertyCards}>
 								{filteredProperties.map(property => (
 									<PropertyCard
@@ -258,14 +258,10 @@ function App() {
 				<Route
 					path="/listing/:id"
 					element={
-						selectedProperty && (
-							<ListingPage
-								property={selectedProperty}
-								onClose={handleCloseListingPage}
-								properties={properties}
-								onListingChange={handleDataRefresh}
-							/>
-						)
+						<ListingPage
+							properties={properties}
+							onListingChange={handleDataRefresh}
+						/>
 					}
 				/>
 				<Route

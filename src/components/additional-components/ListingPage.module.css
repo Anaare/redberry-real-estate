@@ -63,6 +63,7 @@
 	line-height: 28.8px;
 	text-align: left;
 	color: #808a93;
+	white-space: nowrap;
 }
 
 .info img {
@@ -128,8 +129,8 @@
 	align-items: center;
 	justify-content: flex-start;
 	position: absolute;
-	top: 440px;
-	left: 865px;
+	top: 480px;
+	left: 855px;
 }
 
 .mail,
@@ -177,6 +178,11 @@
 	background-color: #fff;
 	white-space: nowrap;
 	margin-top: 20px;
+}
+
+.btn:active {
+	background-color: #808a93;
+	color: #fff;
 }
 
 .releasedInfo {
