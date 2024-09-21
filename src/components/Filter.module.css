@@ -88,3 +88,13 @@
 	background-color: #fff;
 	border: 1px solid #f93b1d;
 }
+
+.addListing:active {
+	background: #df3014;
+}
+
+.addAgent:active {
+	background: #f93b1d;
+	border: 1px solid #f93b1d;
+	color: #fff;
+}

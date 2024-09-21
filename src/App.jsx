@@ -224,7 +224,7 @@ function App() {
 								setMaxPrice={setMaxPrice}
 								setMinArea={setMinArea}
 								setMaxArea={setMaxArea}
-								onFilterChange={filterProperties} // Trigger filter logic
+								onFilterChange={filterProperties}
 								onAddAgentClick={openAddAgentModal}
 							/>
 							<FilteredInfo

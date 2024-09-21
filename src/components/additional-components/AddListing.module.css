@@ -226,6 +226,16 @@
 	border: 1px solid #f93b1d;
 }
 
+.addBtn:active {
+	background: #df3014;
+}
+
+.cancelBtn:active {
+	background: #f93b1d;
+	border: 1px solid #f93b1d;
+	color: #fff;
+}
+
 .agent {
 	display: flex;
 	flex-direction: column;

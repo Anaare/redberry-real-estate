@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
-import styles from './ListingPage.module.css';
 import FilterBox from './FilterBox';
+import DeleteListingModal from './DeleteListingModal';
+import styles from './ListingPage.module.css';
+
 function ListingPage({ property, onClose, properties, onListingChange }) {
 	const token = '9d0b7326-46af-40e2-bdbf-4bab9c9b83aa';
 	const navigate = useNavigate();
 
 	const [propertyDataById, setPropertyDataId] = useState(null);
+
+	const [showDeleteListingModal, setShowDeleteListingModal] = useState(false);
+
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+
 	useEffect(() => {
 		const fetchPropertyData = async () => {
 			try {
@@ -45,6 +51,14 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 
 	const agentInfo = propertyDataById?.agent;
 
+	const openDeleteListingModal = () => {
+		setShowDeleteListingModal(true);
+	};
+
+	const closeAddAgentModal = () => {
+		setShowDeleteListingModal(false);
+	};
+
 	const handleDelete = async () => {
 		try {
 			const response = await fetch(
@@ -62,15 +76,14 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 
-			// Optionally, show a success message
 			alert('Listing deleted successfully.');
 
-			// Navigate back to the home page or another page
 			navigate('/');
 			if (onListingChange) onListingChange();
 		} catch (e) {
-			// Handle error if needed
 			alert(`Failed to delete listing: ${e.message}`);
+		} finally {
+			setShowDeleteListingModal(false);
 		}
 	};
 
@@ -129,7 +142,7 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 							</div>
 						</div>
 						<div>
-							<Button className={styles.btn} onClick={handleDelete}>
+							<Button className={styles.btn} onClick={openDeleteListingModal}>
 								ლისტინგის წაშლა
 							</Button>
 						</div>
@@ -145,6 +158,10 @@ function ListingPage({ property, onClose, properties, onListingChange }) {
 					</div>
 				</div>
 			</div>
+
+			{showDeleteListingModal && (
+				<DeleteListingModal onConfirm={handleDelete} onClose={onClose} />
+			)}
 		</div>
 	);
 }
