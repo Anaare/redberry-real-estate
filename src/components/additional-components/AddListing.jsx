@@ -142,12 +142,12 @@ function AddListing({ regions, cities, initialAgents, onListingChange }) {
 			}
 
 			const result = await response.json();
-			console.log(result);
 
 			if (onListingChange) {
 				onListingChange();
 			}
 			navigate('/');
+			alert('Listing Added succesfully 🚀');
 		} catch (error) {
 			console.error('Error adding listing:', error);
 			setErrors(prevErrors => ({

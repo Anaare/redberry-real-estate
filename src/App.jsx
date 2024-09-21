@@ -101,7 +101,7 @@ function App() {
 
 				const data = await response.json();
 				setProperties(data);
-				setFilteredProperties(data); // Initialize filtered properties with all properties
+				setFilteredProperties(data);
 			} catch (e) {
 				setError(e.message);
 			} finally {
